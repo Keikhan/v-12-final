@@ -5,8 +5,13 @@ set -o errexit
 # Install dependencies
 pip install -r requirements.txt
 
-# Create staticfiles directory if it doesn't exist
+# Create necessary directories
 mkdir -p staticfiles
+mkdir -p media
+
+# Set proper permissions
+chmod -R 755 staticfiles
+chmod -R 755 media
 
 # Collect static files (with error handling)
 python manage.py collectstatic --no-input || {
@@ -26,3 +31,12 @@ User = get_user_model()
 if not User.objects.filter(username='admin').exists():
     User.objects.create_superuser('admin', 'admin@example.com', 'admin')
 END
+
+# Print environment for debugging
+echo "Current directory: $(pwd)"
+echo "Directory contents:"
+ls -la
+echo "Python version:"
+python --version
+echo "Installed packages:"
+pip list

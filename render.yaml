@@ -3,7 +3,7 @@ services:
     name: v12django
     runtime: python
     buildCommand: "./build.sh"
-    startCommand: "gunicorn auth_system.wsgi:application"
+    startCommand: "gunicorn auth_system.wsgi:application --bind 0.0.0.0:$PORT --workers 4 --timeout 120"
     envVars:
       - key: SECRET_KEY
         generateValue: true
