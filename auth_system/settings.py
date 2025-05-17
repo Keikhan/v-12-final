@@ -90,8 +90,6 @@ WSGI_APPLICATION = "auth_system.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# Database configuration with dj-database-url
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -99,14 +97,14 @@ DATABASES = {
     }
 }
 
-# Use PostgreSQL on Render
-DATABASE_URL = os.environ.get('DATABASE_URL')
-if DATABASE_URL:
-    DATABASES['default'] = dj_database_url.config(
-        default=DATABASE_URL,
-        conn_max_age=600,
-        conn_health_checks=True,
-    )
+# Remove PostgreSQL configuration
+# DATABASE_URL = os.environ.get('DATABASE_URL')
+# if DATABASE_URL:
+#     DATABASES['default'] = dj_database_url.config(
+#         default=DATABASE_URL,
+#         conn_max_age=600,
+#         conn_health_checks=True,
+#     )
 
 
 # Password validation
