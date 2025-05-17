@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Регистрация" %}{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="logo">
+        <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo-image">
+    </div>
+    
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <input type="email" name="email" placeholder="{% trans "Электронная почта" %}" required>
+        </div>
+        
+        <div class="form-group">
+            <input type="password" name="password" placeholder="{% trans "Создать пароль" %}" required>
+        </div>
+        
+        <div class="password-requirements">
+            <ul>
+                <li>{% trans "Ваш пароль не должен быть похож на другую личную информацию." %}</li>
+                <li>{% trans "Ваш пароль должен содержать не менее 8 символов." %}</li>
+                <li>{% trans "Ваш пароль не должен быть часто используемым паролем." %}</li>
+                <li>{% trans "Ваш пароль не может состоять только из цифр." %}</li>
+            </ul>
+        </div>
+        
+        <div class="form-group">
+            <input type="password" name="password2" placeholder="{% trans "Повторите пароль" %}" required>
+        </div>
+        
+        <div class="captcha-container">
+            <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
+        </div>
+        
+        <div class="form-group">
+            <button type="submit" class="btn">{% trans "Готово" %}</button>
+        </div>
+    </form>
+    
+    <div class="links">
+        <p>{% trans "Уже есть аккаунт?" %} <a href="{% url 'login' %}">{% trans "Войти" %}</a></p>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+{% endblock %}
