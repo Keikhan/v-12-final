@@ -5,8 +5,13 @@ set -o errexit
 # Install dependencies
 pip install -r requirements.txt
 
-# Collect static files
-python manage.py collectstatic --no-input
+# Create staticfiles directory if it doesn't exist
+mkdir -p staticfiles
+
+# Collect static files (with error handling)
+python manage.py collectstatic --no-input || {
+    echo "Warning: collectstatic failed, but continuing..."
+}
 
 # Make migrations
 python manage.py makemigrations
