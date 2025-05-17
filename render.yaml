@@ -3,7 +3,7 @@ services:
     name: v12django
     runtime: python
     buildCommand: "./build.sh"
-    startCommand: "gunicorn auth_system.wsgi:application --bind 0.0.0.0:$PORT --workers 4 --timeout 120"
+    startCommand: "gunicorn -c gunicorn_config.py auth_system.wsgi:application"
     envVars:
       - key: SECRET_KEY
         generateValue: true
@@ -17,5 +17,7 @@ services:
         value: .onrender.com
       - key: CSRF_TRUSTED_ORIGINS
         value: https://*.onrender.com
+      - key: PORT
+        value: 8000
     healthCheckPath: /
     autoDeploy: true
